@@ -10,11 +10,6 @@ class Mapas(admin.ModelAdmin):
 
 admin.site.register(Mapa, Mapas)
 
-class Rotas(admin.ModelAdmin):
-    list_display = ('id','origem','destino','distancia')
-    list_display_links = ('id','origem','destino')
-    search_fields = ('id',)
-    list_per_page = 20
-admin.site.register(Rota, Rotas)
+
 
 # Register your models here.

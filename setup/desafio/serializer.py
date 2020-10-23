@@ -20,4 +20,3 @@ class MapaSerializer(serializers.ModelSerializer):
         for rota_data in rotas_data:
             Rota.objects.create(mapa=mapa, **rota_data)
         return mapa
-

@@ -20,23 +20,47 @@ class RotasViewSet(viewsets.ModelViewSet):
 
 @api_view(['GET'])
 def CalculoRota(request):
-
     parametros =  JSONParser().parse(request)
-    codmap = parametros['mapa']
-    rotas = Rota.objects.all()
 
-    rotas = rotas.filter(mapa__nome__icontains=codmap)
- 
+    if not checkRequestValido(parametros):
+        return JsonResponse({'mensagem': 'Parametros invalidos'}, status=status.HTTP_404_NOT_FOUND)
+
+    #obter rotas
+    rotas = Rota.objects.all()
+    rotas = rotas.filter(mapa__nome__icontains= parametros['mapa'])
+    
+    #checar se os objetos existem no banco
+    if not rotas.exists():
+        return JsonResponse({'mensagem': 'Mapa nao encontrado'}, status=status.HTTP_404_NOT_FOUND)
+
+    if not  rotas.filter(origem__icontains= parametros['origem']):
+        return JsonResponse({'mensagem': 'Origem nao encontrada'}, status=status.HTTP_404_NOT_FOUND)
+    
+    if not  rotas.filter(destino__icontains= parametros['destino']):
+        return JsonResponse({'mensagem': 'Destino nao encontrado'}, status=status.HTTP_404_NOT_FOUND)
+
+    
     graph = Graph()
     for rota in rotas:
         graph.add_edge(rota.origem, rota.destino, rota.distancia) 
 
     dijkstra = DijkstraSPF(graph, parametros['origem'])
- 
     caminho = dijkstra.get_path(parametros['destino'])
+
     gasto = dijkstra.get_distance(parametros['destino'])/parametros['autonomia']*parametros['valorLitro']
 
     return JsonResponse({'origem': parametros['origem'],'destino': parametros['destino'],'gasto': gasto,'rota': caminho}, status=status.HTTP_404_NOT_FOUND) 
          
 
-
+def checkRequestValido(parametros):
+    #checar parametros string
+    if not isinstance(parametros['mapa'], str) and  isinstance(parametros['origem'], str) and isinstance(parametros['destino'], str) and isinstance(parametros['origem'], str):
+        return False
+    #checar parametros float
+    if not  isinstance(parametros['autonomia'], float) and  isinstance(parametros['valorLitro'], float):
+        return False
+    #checar parametros positivos
+    if not  parametros['autonomia'] > 0 and  parametros['valorLitro'] >= 0 :
+        return False
+    
+    return True

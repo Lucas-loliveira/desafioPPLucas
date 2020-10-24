@@ -11,5 +11,4 @@ class Mapas(admin.ModelAdmin):
 admin.site.register(Mapa, Mapas)
 
 
-
 # Register your models here.

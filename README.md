@@ -14,9 +14,9 @@ O software tem como objetivo encontrar o menor caminho e calcular o gasto de com
 
 ## API Mapa
 
-### Descrição: Cadastro de mapas
-
 ### URL: mapas/
+
+### Descrição: Cadastro de mapas
 
 ### Método: POST
 
@@ -40,9 +40,10 @@ O software tem como objetivo encontrar o menor caminho e calcular o gasto de com
                         ...
                         ]
             }
-
-### Descrição: Recuperar todos os mapas cadastrados           
+          
 ### URL: mapas/
+
+### Descrição: Recuperar todos os mapas cadastrados 
 
 ### Método: GET
 
@@ -59,9 +60,10 @@ O software tem como objetivo encontrar o menor caminho e calcular o gasto de com
                 },
                 ...
             ]
- 
-### Descrição: Recuperar um mapa especifico baseado em seu id           
+        
 ### URL: mapas/<id:int>/
+
+### Descrição: Recuperar um mapa especifico baseado em seu id   
 
 ### Método: GET
 
@@ -76,17 +78,20 @@ O software tem como objetivo encontrar o menor caminho e calcular o gasto de com
                         ]
             }
           
-
-### Descrição: Deletar um mapa especifico baseado em seu id           
+           
 ### URL: mapas/<id:int>/
+
+### Descrição: Deletar um mapa especifico baseado em seu id
 
 ### Método: DELETE
 
 
 ## API Calculo rota
 
-### Descrição: Calcular a menor rota e o gasto de combustível           
+        
 ### URL: /calculoRota/
+
+### Descrição: Calcular a menor rota e o gasto de combustível   
 
 ### Método: GET ou POST
 obs: O método POST foi adicionado nessa API pois não foi possivel realizar os testes da API com o método GET

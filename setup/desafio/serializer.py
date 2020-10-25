@@ -12,7 +12,7 @@ class MapaSerializer(serializers.ModelSerializer):
     rotas = RotaSerializer(many=True)
     class Meta:
         model = Mapa
-        fields = ['nome',  'rotas']
+        fields = ['id','nome',  'rotas']
 
     def create(self, validated_data):
         rotas_data = validated_data.pop('rotas')
